@@ -60,6 +60,8 @@ function drawConfetti() {
 drawConfetti();
 
 // ⏳ Countdown + Thank You Switch
+let countdownInterval;
+
 function updateCountdown() {
   const targetDate = new Date("Nov 15, 2025 00:00:00").getTime();
   const now = new Date().getTime();
@@ -69,7 +71,13 @@ function updateCountdown() {
   if (distance <= 0) {
     document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
     thankPage.classList.add("active");
-    return;
+
+    //stop the countdown
+    clearInterval(countdownInterval);
+
+    //set the final message 
+    document.getElementById("countdown").innerHTML="The big day is here🎉" ;
+    
   }
 
   const days = Math.floor(distance / (1000 * 60 * 60 * 24));
@@ -79,5 +87,6 @@ function updateCountdown() {
   document.getElementById("countdown").innerHTML =
     `${days}d ${hours}h ${mins}m ${secs}s until the big day 🎂`;
 }
-setInterval(updateCountdown, 1000);
+//store the interval in a variable so we can clear it later
+countdownInterval= setInterval(updateCountdown, 1000);
 updateCountdown();
